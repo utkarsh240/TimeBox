@@ -3,6 +3,8 @@
 import { useRef, useState } from "react"
 
 import { useParams } from "next/navigation"
+import { useMutation } from "@tanstack/react-query"
+import { client } from "@/lib/client"
 
 function formatTimeRemaining(seconds: number){
     const mins = Math.floor(seconds/60)
@@ -22,7 +24,14 @@ const Page = () =>{
 
     const [copyStatus, setCopyStatus] = useState("copy")
 
-    const [timeRemaining, setTimeRemaining] = useState<number|null>(600)
+    const [timeRemaining, setTimeRemaining] = useState<number|null>(51)
+
+    const {mutate: sendMessage} = useMutation({
+        mutationFn: async({text}: {text:string})=>{
+            await client.messages.post({sender:useUsername, text}, {query:{roomId}})
+        }
+    })
+
 
     const copyLink = () =>{
         const url = window.location.href
