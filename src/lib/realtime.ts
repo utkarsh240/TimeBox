@@ -1,6 +1,7 @@
-import z from "zod";
+import {z} from "zod";
 import { redis } from "@/lib/redis";
-import {Realtime} from "@upstash/redis"
+
+import { Realtime, InferRealtimeEvents } from "@upstash/realtime";
 
 
 const message = z.object({
@@ -23,7 +24,7 @@ const  schema = {
 }
 
 
-export const realtime = new realtime({schema, redis})
+export const realtime = new Realtime({schema, redis})
 
 export type RealtimeEvents= InferRealtimeEvents<typeof realtime>
 
