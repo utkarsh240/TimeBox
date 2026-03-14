@@ -1,25 +1,22 @@
-import { useState, useEffect } from "react"
 import { nanoid } from "nanoid"
+import { useEffect, useState } from "react"
 
-const ANIMALS = ["wolf", "lion", "fish"]
-
+const ANIMALS = ["wolf", "hawk", "bear", "shark"]
 const STORAGE_KEY = "chat_username"
 
-const generateUsername = () =>{
-
+const generateUsername = () => {
   const word = ANIMALS[Math.floor(Math.random() * ANIMALS.length)]
-
   return `anonymous-${word}-${nanoid(5)}`
-
 }
 
 export const useUsername = () => {
-      const [username, setUsername] =  useState("")
-    useEffect(()=>{
-    const main = () => {
-    const stored = localStorage.getItem(STORAGE_KEY)
+  const [username, setUsername] = useState("")
 
-      if(stored){
+  useEffect(() => {
+    const main = () => {
+      const stored = localStorage.getItem(STORAGE_KEY)
+
+      if (stored) {
         setUsername(stored)
         return
       }
@@ -32,5 +29,5 @@ export const useUsername = () => {
     main()
   }, [])
 
-  return {username}
+  return { username }
 }
